@@ -62,7 +62,7 @@ module Faxage
         username: username,
         company: company,
         password: password
-      }.merge!(options.each { |k, v| options[k] = 1 if v and !(k == "begin" or k == :begin) })
+      }.merge!(options.each { |k, v| options[k] = 1 if v and !([:begin, :didnumber].include?(k.to_sym)) })
 
       response = self.class.post(subdirectory,
         body: body
