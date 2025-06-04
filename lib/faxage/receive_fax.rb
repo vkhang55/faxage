@@ -54,12 +54,15 @@ module Faxage
 
       subdirectory = "/httpsfax.php"
 
+      # Disregard the "begin" option flags and don't set it to 1. We can use this
+      # flag to retrieve all faxes that was received since timestamp X where
+      # X has the format of %Y-%m-%d %H:%M:%S.
       body = {
         operation: "listfax",
         username: username,
         company: company,
         password: password
-      }.merge!(options.each { |k, v| options[k] = 1 if v } )
+      }.merge!(options.each { |k, v| options[k] = 1 if v and !(k == "begin" or k == :begin) })
 
       response = self.class.post(subdirectory,
         body: body
